@@ -83,7 +83,7 @@ class Ball
       x = BORDER + radius;
       angle = PI - angle;
       
-      audio.triggerReverse((int)y);
+      audio.trigger(0, map(y, height - BORDER - radius, BORDER + radius, tempmin, tempmax));
     }
     
     else if (x > width - BORDER - radius)
@@ -91,7 +91,7 @@ class Ball
       x = width - BORDER - radius;
       angle = PI - angle;
       
-      audio.triggerForward((int)y);
+      audio.trigger(1, map(y, height - BORDER - radius, BORDER + radius, tempmin, tempmax));
     }
     
     if (y < BORDER + radius)
@@ -99,7 +99,7 @@ class Ball
       y = BORDER + radius;
       angle = TAU - angle;
       
-      audio.triggerReverse((int)x);
+      audio.trigger(2, map(x, BORDER + radius, width - BORDER - radius, tempmin, tempmax));
       
     }
     else if (y > height - BORDER - radius) 
@@ -107,7 +107,7 @@ class Ball
       y = height - BORDER - radius;
       angle = TAU - angle;
       
-      audio.triggerForward((int)x);
+      audio.trigger(3, map(x, BORDER + radius, width - BORDER - radius, tempmin, tempmax));
     }
     
   }

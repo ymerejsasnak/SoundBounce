@@ -1,17 +1,20 @@
 public class Audio
 {
   AudioContext ac;
-  SamplePlayer sampler;
+  SamplePlayer[] samples;
   Gain gain;
-  Envelope gainEnv;
+  int sampleLoadCounter;
+  
+  boolean loaded;
   
   Audio()
   {
+    loaded = false;
+    sampleLoadCounter = 0;
     ac = new AudioContext();
-    ac.start();
-    gainEnv = new Envelope(ac);
-    
-    gain = new Gain(ac, 2, gainEnv);
+        
+    gain = new Gain(ac, 2, .5);
+    samples = new SamplePlayer[4];
     selectInput("choose a sample", "getFile", sketchFile(""), this);
   }
   
@@ -23,58 +26,48 @@ public class Audio
     }
     else
     {
-      setupSampler(selection.getAbsolutePath());
+      setupSamplers(sampleLoadCounter, selection.getAbsolutePath());
     }
     
   }
   
   
-  void setupSampler(String path)
+  void setupSamplers(int samplerIndex, String path)
   {
-    try
-    {
-      sampler = new SamplePlayer(ac, new Sample(path)); 
+    try {
+      samples[samplerIndex] = new SamplePlayer(ac, new Sample(path)); 
+    } 
+    catch (IOException e) {
+      println("load error");
+      exit();
     }
-    catch (IOException e)
-    {
-       println("load error");
-       exit();
+  
+    gain.addInput(samples[samplerIndex]);
+    samples[samplerIndex].pause(true);
+    samples[samplerIndex].setKillOnEnd(false);
+    samples[samplerIndex].setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
+    
+    
+    if (sampleLoadCounter < 3) {
+      sampleLoadCounter++;
+      selectInput("choose a sample", "getFile", sketchFile(""), this);
     }
     
-    gain.addInput(sampler);
-    ac.out.addInput(gain);
-    //sampler.pause(true);
-    sampler.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
-    sampler.setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
-   
+    else {
+      loaded = true;
+      ac.out.addInput(gain);
+      ac.start();
+    }
   }
   
   
-  void triggerReverse(int y)
+  void trigger(int index, float value)
   {
-    zeroEnvelope();
-    float rate = map(y, height - BORDER, BORDER, -.75, -1.5);    
-    sampler.setRate(new Static(ac, rate));
-    gainEnv.addSegment(1, 10);
-    gainEnv.addSegment(0, 10000/ball.speed);
-    //sampler.setToEnd();
-    //sampler.start();
-  }
-  
-  void triggerForward(int y)
-  {
-    zeroEnvelope();
-    float rate = map(y, height - BORDER, BORDER, .75, 1.5);   
-    sampler.setRate(new Static(ac, rate));
-     gainEnv.addSegment(1, 10);
-    gainEnv.addSegment(0, 10000/ball.speed);
-    //sampler.setToLoopStart();
-    //sampler.start();
+    if (loaded) {
+      samples[index].setRate(new Static(ac, value));
+      samples[index].reTrigger();
+    }
   }
   
   
-  void zeroEnvelope()
-  {
-    gainEnv.setValue(0); 
-  }
 }

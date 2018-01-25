@@ -4,11 +4,15 @@
 // but keep it simple and finish it soon!
 // add recording of course
 
+
 import beads.*;
 
 
 final int BORDER = 30;
 
+
+float tempmin = .75;
+float tempmax = 1.5;
 
 
 Ball ball;
@@ -27,7 +31,7 @@ void setup() {
 
 void draw() {
   
-  fill(0, 50);
+  fill(0, 20);
   rect(BORDER, BORDER, width - BORDER * 2, height - BORDER * 2);
 
   ball.updatePosition();
@@ -35,33 +39,4 @@ void draw() {
   ball.display();
 
   
-}
-
-void mousePressed() {
-  
-  //if (ball.mouseOver(mouseX, mouseY))
-  
-    if (mouseButton == LEFT)
-    {
-      ball.setPressed(mouseX, mouseY);
-    }
-    else if (mouseButton == RIGHT)
-    {
-      ball.angleNudge(); 
-    }
-}
-
-
-void mouseReleased()
-{
-  ball.setReleased(); 
-}
-
-
-void mouseDragged()
-{
-  if (ball.getPressed())
-  {
-    ball.followMouse(mouseX, mouseY); 
-  }
 }
