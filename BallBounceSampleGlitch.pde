@@ -1,8 +1,8 @@
-// maybe load sound 4 times (or 4 diff sounds?), 1 for each side
-// then can assign forward or reverse
-// can assign pitch range (or other possible stuff???)
-// but keep it simple and finish it soon!
-// add recording of course
+// maybe load 2 of each sound and crossfade with each new trigger so less glitchy with longer sounds?
+// add recording
+// any other ideas or is that fine?
+// cleanup, adjustments, finish, share, etc.
+
 
 
 import beads.*;

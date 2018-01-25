@@ -7,6 +7,9 @@ public class Audio
   
   boolean loaded;
   
+  Sample recordedOutput;
+  RecordToSample recorder;
+  
   Audio()
   {
     loaded = false;
@@ -56,6 +59,11 @@ public class Audio
     else {
       loaded = true;
       ac.out.addInput(gain);
+      recordedOutput = new Sample(100);
+      recorder = new RecordToSample(ac, recordedOutput, RecordToSample.Mode.INFINITE);
+      recorder.addInput(ac.out);
+      recorder.pause(true);
+      ac.out.addDependent(recorder);
       ac.start();
     }
   }
@@ -66,6 +74,29 @@ public class Audio
     if (loaded) {
       samples[index].setRate(new Static(ac, value));
       samples[index].reTrigger();
+    }
+  }
+  
+  void recordToFile() {
+    if (recorder.isPaused()) {
+      println("now recording");
+      recorder.pause(false);
+    }
+    else {
+      recorder.pause(true); 
+      recorder.clip();
+                  //use SelectOutput to save file, not this junk!
+      //String saveName = String.valueOf(year() + month() + day() + hour() + minute() + second() + millis());
+      try {
+        recordedOutput.write(dataPath("temp.wav"), AudioFileType.WAV);
+        println("file saved");
+      }
+      catch (IOException e) {
+        println("couldn't save");
+      }
+      recordedOutput = new Sample(100);
+      recorder.setSample(recordedOutput);
+      recorder.reset();
     }
   }
   

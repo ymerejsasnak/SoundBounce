@@ -2,13 +2,14 @@ void mousePressed() {
   
   //if (ball.mouseOver(mouseX, mouseY))
   
-    if (mouseButton == LEFT)
-    {
+    if (mouseButton == LEFT) {
       ball.setPressed(mouseX, mouseY);
     }
-    else if (mouseButton == RIGHT)
-    {
+    else if (mouseButton == RIGHT) {
       ball.angleNudge(); 
+    }
+    else if (mouseButton == CENTER) {
+      audio.recordToFile();
     }
 }
 
