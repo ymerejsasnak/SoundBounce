@@ -1,3 +1,6 @@
+//change control? - wheel adjusts angle 1 way or other by increment
+// right mouse triggers record
+
 // maybe load 2 of each sound and crossfade with each new trigger so less glitchy with longer sounds?
 // add recording
 // any other ideas or is that fine?
@@ -31,7 +34,7 @@ void setup() {
 
 void draw() {
   
-  fill(0, 20);
+  fill(0, 50);
   rect(BORDER, BORDER, width - BORDER * 2, height - BORDER * 2);
 
   ball.updatePosition();

@@ -35,6 +35,7 @@ class Ball
   
   void setPressed(int _mouseX, int _mouseY)
   {
+    followMouse(_mouseX, _mouseY);
     pressed = true; 
     speed = 0;
     startX = _mouseX;
@@ -59,9 +60,9 @@ class Ball
   }
   
   
-  void angleNudge()
+  void angleNudge(float direction)
   {
-    angle += randomGaussian();  
+    angle += direction;  
   }
   
   
@@ -115,7 +116,11 @@ class Ball
 
   void display()
   {
-    fill(200);
+    if (speed > 0) {
+      fill(0, random(100, 150), random(100, 200));
+    } else {
+      fill(200);
+    }
     ellipse(x, y, radius * 2, radius * 2);
     
     if (pressed)
