@@ -1,7 +1,5 @@
-class Ball 
-{
-  
-  int radius;
+class Ball {
+
   float x, y;
   float startX, startY;
   float speed;
@@ -9,9 +7,7 @@ class Ball
   
   boolean pressed;
   
-  Ball()
-  {
-    radius = 50;
+  Ball() {
     x = width/2;
     y = height/2;
     speed = 0;
@@ -19,22 +15,19 @@ class Ball
   }
   
   
-  boolean mouseOver(int _mouseX, int _mouseY)
-  {
-    return dist(_mouseX, _mouseY, x, y) < radius;
+  boolean mouseOver(int _mouseX, int _mouseY) {
+    return dist(_mouseX, _mouseY, x, y) < BALL_RADIUS;
     
   }
   
   
-  void followMouse(int _mouseX, int _mouseY)
-  {
+  void followMouse(int _mouseX, int _mouseY) {
     x = _mouseX;
     y = _mouseY;
   }
   
   
-  void setPressed(int _mouseX, int _mouseY)
-  {
+  void setPressed(int _mouseX, int _mouseY) {
     followMouse(_mouseX, _mouseY);
     pressed = true; 
     speed = 0;
@@ -43,10 +36,8 @@ class Ball
   }
   
   
-  void setReleased()
-  {
-    if (pressed)
-    {
+  void setReleased() {
+    if (pressed) {
       pressed = false; 
       speed = dist(x, y, startX, startY) / 2;
       angle = atan2(startY - y, startX - x);
@@ -54,77 +45,53 @@ class Ball
   }
   
   
-  boolean getPressed()
-  {
+  boolean getPressed() {
     return pressed;  
   }
   
   
-  void angleNudge(float direction)
-  {
+  void angleNudge(float direction) {
     angle += direction;  
   }
   
   
-  void updatePosition()
-  {
+  void updatePosition() {
     x += cos(angle) * speed;
     y += sin(angle) * speed;
-    
-   
   }
   
   
-  void collisionDetect()
-  {
+  void collisionDetect() {
     
-    
-    if (x < BORDER + radius)
-    { 
-      x = BORDER + radius;
+    if (x < POS_MIN) { 
+      x = POS_MIN;
       angle = PI - angle;
-      
-      audio.trigger(0, map(y, height - BORDER - radius, BORDER + radius, tempmin, tempmax));
-    }
-    
-    else if (x > width - BORDER - radius)
-    { 
-      x = width - BORDER - radius;
+      audio.triggerSampler(0, y);
+    } else if (x > POS_MAX) { 
+      x = POS_MAX;
       angle = PI - angle;
-      
-      audio.trigger(1, map(y, height - BORDER - radius, BORDER + radius, tempmin, tempmax));
+      audio.triggerSampler(1, y);
     }
     
-    if (y < BORDER + radius)
-    { 
-      y = BORDER + radius;
+    if (y < POS_MIN) { 
+      y = POS_MIN;
       angle = TAU - angle;
-      
-      audio.trigger(2, map(x, BORDER + radius, width - BORDER - radius, tempmin, tempmax));
-      
-    }
-    else if (y > height - BORDER - radius) 
-    { 
-      y = height - BORDER - radius;
+      audio.triggerSampler(2, x);
+    } else if (y > POS_MAX) { 
+      y = POS_MAX;
       angle = TAU - angle;
-      
-      audio.trigger(3, map(x, BORDER + radius, width - BORDER - radius, tempmin, tempmax));
-    }
-    
+      audio.triggerSampler(3, x);
+    }   
   }
   
 
-  void display()
-  {
-    if (speed > 0) {
-      fill(0, random(100, 150), random(100, 200));
-    } else {
-      fill(200);
-    }
-    ellipse(x, y, radius * 2, radius * 2);
+  void display() {
+
+    fill(200);
+    noStroke();
+    ellipse(x, y, BALL_RADIUS * 2, BALL_RADIUS * 2);
     
-    if (pressed)
-    {
+    if (pressed) {
       stroke(150);
       line(x, y, startX, startY); 
     }

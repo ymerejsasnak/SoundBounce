@@ -1,22 +1,19 @@
-//change control? - wheel adjusts angle 1 way or other by increment
-// right mouse triggers record
-
-// maybe load 2 of each sound and crossfade with each new trigger so less glitchy with longer sounds?
-// add recording
-// any other ideas or is that fine?
-// cleanup, adjustments, finish, share, etc.
-
+// maybe load 2/3/4 of each sound and cycle the triggering (ie multiple voices per sampler)
+// ?? limit soundfile length ??
+// fix savefile naming
 
 
 import beads.*;
 
 
 final int BORDER = 30;
+final int BALL_RADIUS = 50;
 
+final int POS_MIN = BORDER + BALL_RADIUS;
+final int POS_MAX = 800 - BORDER - BALL_RADIUS;
 
-float tempmin = .75;
-float tempmax = 1.5;
-
+final float RATE_MIN = .75;
+final float RATE_MAX = 1.5;
 
 Ball ball;
 Audio audio;
@@ -40,6 +37,5 @@ void draw() {
   ball.updatePosition();
   ball.collisionDetect();
   ball.display();
-
   
 }
