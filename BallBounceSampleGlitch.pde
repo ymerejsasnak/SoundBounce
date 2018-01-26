@@ -1,9 +1,10 @@
 // maybe load 2/3/4 of each sound and cycle the triggering (ie multiple voices per sampler)
-// ?? limit soundfile length ??
+// ?? limit soundfile length ?? or add envelop?
 // fix savefile naming
 
 
 import beads.*;
+import java.io.File;
 
 
 final int BORDER = 30;

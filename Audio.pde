@@ -50,24 +50,26 @@ class Audio {
     samplers[index].trigger(map(value, POS_MIN, POS_MAX, RATE_MIN, RATE_MAX));
   }
 
-  
+  // doing too much here? - controlling record start/stop, saving file, resetting recorder
   void recordToFile() {
     if (recorder.isPaused()) {
-      println("NOW RECORDING");
+      println("BEGIN RECORDING");
       recorder.pause(false);
-    }
-    else {
+    } else {
+      println("END RECORDING");
       recorder.pause(true); 
       recorder.clip();
-                  //use SelectOutput to save file, not this junk!
-      //String saveName = String.valueOf(year() + month() + day() + hour() + minute() + second() + millis());
+      
+      int saveNumber = new File(dataPath("")).listFiles().length; 
+      String saveName = "BallBounceRecording" + saveNumber + ".wav";
       try {
-        recordedOutput.write(dataPath("temp.wav"), AudioFileType.WAV);
-        println("recording stopped, file saved");
+        recordedOutput.write(dataPath(saveName), AudioFileType.WAV);
+        println("File \"" + saveName + "\" saved to data folder.");
       }
       catch (IOException e) {
-        println("couldn't save");
+        println("Couldn't save recording (check for existence of data folder).");
       }
+      
       recordedOutput = new Sample(100);
       recorder.setSample(recordedOutput);
       recorder.reset();

@@ -10,6 +10,7 @@ void mousePressed() {
       audio.loadSample(2);
     } else if (mouseY > width - BORDER) {
       audio.loadSample(3);
+      
     } else {
       ball.setPressed(mouseX, mouseY);
     }
@@ -20,22 +21,18 @@ void mousePressed() {
 }
 
 
-void mouseWheel(MouseEvent e)
-{
+void mouseWheel(MouseEvent e) {
    ball.angleNudge(e.getCount() / 10.0);
 }
 
 
-void mouseReleased()
-{
+void mouseReleased() {
   ball.setReleased();
 }
 
 
-void mouseDragged()
-{
-  if (ball.getPressed())
-  {
+void mouseDragged() {
+  if (ball.getPressed()) {
     ball.followMouse(mouseX, mouseY);
   }
 }
