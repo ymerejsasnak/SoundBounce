@@ -1,6 +1,12 @@
+// cleanup, comments, etc
+// make sounds to use
+
+
+// maybe have 8 loadable sounds (split each side in half? -- color code things to easily load multiple sounds with corners)
+
 // maybe load 2/3/4 of each sound and cycle the triggering (ie multiple voices per sampler)
 // ?? limit soundfile length ?? or add envelop?
-// fix savefile naming
+
 
 
 import beads.*;
@@ -13,8 +19,8 @@ final int BALL_RADIUS = 50;
 final int POS_MIN = BORDER + BALL_RADIUS;
 final int POS_MAX = 800 - BORDER - BALL_RADIUS;
 
-final float RATE_MIN = .75;
-final float RATE_MAX = 1.5;
+final float RATE_MIN = .95;
+final float RATE_MAX = 1.1;
 
 Ball ball;
 Audio audio;

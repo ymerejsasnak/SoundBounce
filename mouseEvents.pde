@@ -1,7 +1,7 @@
 void mousePressed() {
 
-
   if (mouseButton == LEFT) {
+    
     if (mouseX < BORDER) {
       audio.loadSample(0);
     } else if (mouseX > width - BORDER) {
@@ -15,14 +15,16 @@ void mousePressed() {
       ball.setPressed(mouseX, mouseY);
     }
     
+    
   } else if (mouseButton == RIGHT) {
-    audio.recordToFile();
+    audio.recordToggle();
   }
+  
 }
 
 
 void mouseWheel(MouseEvent e) {
-   ball.angleNudge(e.getCount() / 10.0);
+   ball.adjustAngle(e.getCount() / 10.0);
 }
 
 

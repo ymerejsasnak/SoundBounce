@@ -29,17 +29,24 @@ public class Sampler {
   void loadSample(File sampleFile) {
     try {
       player = new SamplePlayer(audio.ac, new Sample(sampleFile.getAbsolutePath())); 
-      audio.gain.addInput(player);
-      player.pause(true);
-      player.setKillOnEnd(false);
-      player.setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
-      hasSample = true;
       println(sampleFile.getName() + " loaded successfully");
+      setupSampler();
     } 
     catch (IOException e) {
       println(sampleFile.getName() + " is not a valid file.");
     }
     
+  }
+  
+  
+  void setupSampler() {
+    audio.gain.addInput(player);
+      
+    player.pause(true);
+    player.setKillOnEnd(false);
+    player.setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
+      
+    hasSample = true; 
   }
   
   

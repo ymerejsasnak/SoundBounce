@@ -7,19 +7,14 @@ class Ball {
   
   boolean pressed;
   
+  
   Ball() {
     x = width/2;
     y = height/2;
     speed = 0;
     angle = random(360);
   }
-  
-  
-  boolean mouseOver(int _mouseX, int _mouseY) {
-    return dist(_mouseX, _mouseY, x, y) < BALL_RADIUS;
-    
-  }
-  
+   
   
   void followMouse(int _mouseX, int _mouseY) {
     x = _mouseX;
@@ -50,7 +45,7 @@ class Ball {
   }
   
   
-  void angleNudge(float direction) {
+  void adjustAngle(float direction) {
     angle += direction;  
   }
   
@@ -92,7 +87,7 @@ class Ball {
     ellipse(x, y, BALL_RADIUS * 2, BALL_RADIUS * 2);
     
     if (pressed) {
-      stroke(150);
+      stroke(100);
       line(x, y, startX, startY); 
     }
   }
