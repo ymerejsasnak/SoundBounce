@@ -2,11 +2,9 @@
 // make sounds to use
 
 
-// maybe have 8 loadable sounds (split each side in half? -- color code things to easily load multiple sounds with corners)
+// LAST BUG? - issue with killing old samplers if non-wave file selected (ie, take it out of the try block or reassign then kill?)
 
-// maybe load 2/3/4 of each sound and cycle the triggering (ie multiple voices per sampler)
-// ?? limit soundfile length ?? or add envelop?
-
+// option to adjust pitch range (from zero to a couple octaves?)  (preset ranges selectable at corners)
 
 
 import beads.*;
@@ -19,8 +17,9 @@ final int BALL_RADIUS = 50;
 final int POS_MIN = BORDER + BALL_RADIUS;
 final int POS_MAX = 800 - BORDER - BALL_RADIUS;
 
-final float RATE_MIN = .95;
-final float RATE_MAX = 1.1;
+final float RATE_MIN = 1;
+final float RATE_MAX = 1;
+
 
 Ball ball;
 Audio audio;

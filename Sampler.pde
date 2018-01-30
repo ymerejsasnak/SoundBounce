@@ -1,12 +1,26 @@
 
 public class Sampler {
   
-  SamplePlayer player;
+  AudioContext audioContext;
+  
+  SamplePlayer[] players;
+  Envelope[] envelopes;
+  Gain[] gains;
+  
   boolean hasSample;
+  
+  int currentVoice = 0;
+  int lastVoice = -1;
+  final int MAX_VOICES = 4;
 
   
-  Sampler() {
+  
+  Sampler(AudioContext ac) {
+    audioContext = ac;
     hasSample = false;    
+    players = new SamplePlayer[MAX_VOICES];
+    envelopes = new Envelope[MAX_VOICES];
+    gains = new Gain[MAX_VOICES];
   }
   
   
@@ -28,7 +42,12 @@ public class Sampler {
   
   void loadSample(File sampleFile) {
     try {
-      player = new SamplePlayer(audio.ac, new Sample(sampleFile.getAbsolutePath())); 
+      for (int i = 0; i < MAX_VOICES; i++) {
+        if (hasSample) {
+          players[i].kill();
+        }
+        players[i] = new SamplePlayer(audio.ac, new Sample(sampleFile.getAbsolutePath()));
+      }
       println(sampleFile.getName() + " loaded successfully");
       setupSampler();
     } 
@@ -40,20 +59,35 @@ public class Sampler {
   
   
   void setupSampler() {
-    audio.gain.addInput(player);
+    for (int i = 0; i < MAX_VOICES; i++) {
       
-    player.pause(true);
-    player.setKillOnEnd(false);
-    player.setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
+      envelopes[i] = new Envelope(audioContext, 1);
+      gains[i] = new Gain(audioContext, 2, envelopes[i]);
+      gains[i].addInput(players[i]);
+      audio.gain.addInput(gains[i]);
       
+      players[i].pause(true);
+      players[i].setKillOnEnd(false);
+      players[i].setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
+      
+    }
     hasSample = true; 
   }
   
   
   void trigger(float rate) {
     if (hasSample) {
-      player.setRate(new Static(audio.ac, rate));
-      player.reTrigger();
+      envelopes[currentVoice].setValue(1);
+      
+      players[currentVoice].setRate(new Static(audio.ac, rate));
+      players[currentVoice].reTrigger();
+      
+      if (lastVoice >= 0) {
+        envelopes[lastVoice].addSegment(0, 100);
+      }
+      
+      lastVoice = currentVoice;
+      currentVoice = (currentVoice + 1) % MAX_VOICES;
     }
   }
   

@@ -17,7 +17,7 @@ class Audio {
         
     gain = new Gain(ac, 2, .5);
     
-    samplers = new Sampler[] {new Sampler(), new Sampler(), new Sampler(), new Sampler()};
+    samplers = new Sampler[] {new Sampler(ac), new Sampler(ac), new Sampler(ac), new Sampler(ac)};
     
     ac.out.addInput(gain);
     
