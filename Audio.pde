@@ -7,6 +7,9 @@ class Audio {
   Sample recordedOutput;
   RecordToSample recorder;
   
+  float rateMin = 1;
+  float rateMax = 1;
+  
   String lastSelectedFolder;
   
   
@@ -47,9 +50,22 @@ class Audio {
   
   
   void triggerSampler(int index, float value) {
-    samplers[index].trigger(map(value, POS_MIN, POS_MAX, RATE_MIN, RATE_MAX));
+    samplers[index].trigger(map(value, POS_MIN, POS_MAX, rateMin, rateMax));
   }
 
+  
+  void adjustRateMin(float amount) {
+    rateMin += amount; 
+    rateMin = constrain(rateMin, RATE_MIN, 1);
+    println("Minimum playback rate set to: " + rateMin);
+  }
+  
+  
+  void adjustRateMax(float amount) {
+    rateMax += amount; 
+    rateMax = constrain(rateMax, 1, RATE_MAX);
+    println("Maximum playback rate set to: " + rateMax);
+  }
 
   void recordToggle() {
     if (recorder.isPaused()) {

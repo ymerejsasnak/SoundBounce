@@ -17,21 +17,24 @@ final int BALL_RADIUS = 50;
 final int POS_MIN = BORDER + BALL_RADIUS;
 final int POS_MAX = 800 - BORDER - BALL_RADIUS;
 
-final float RATE_MIN = 1;
-final float RATE_MAX = 1;
-
+final float RATE_MAX = 4;
+final float RATE_MIN = 0.25;
 
 Ball ball;
 Audio audio;
-
+Border border;
 
 void setup() {
-  size(800, 800);
-  background(200);
-  noStroke();
+  size(800, 800); 
   
   ball = new Ball();
   audio = new Audio();
+  border = new Border();
+  
+  border.drawBorder();
+  
+  noStroke();
+    
 }
 
 

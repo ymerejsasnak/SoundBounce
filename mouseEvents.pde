@@ -1,20 +1,7 @@
 void mousePressed() {
 
   if (mouseButton == LEFT) {
-    
-    if (mouseX < BORDER) {
-      audio.loadSample(0);
-    } else if (mouseX > width - BORDER) {
-      audio.loadSample(1);
-    } else if (mouseY < BORDER) {
-      audio.loadSample(2);
-    } else if (mouseY > width - BORDER) {
-      audio.loadSample(3);
-      
-    } else {
-      ball.setPressed(mouseX, mouseY);
-    }
-    
+    border.locateClick(mouseX, mouseY);   
     
   } else if (mouseButton == RIGHT) {
     audio.recordToggle();
