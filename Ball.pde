@@ -10,7 +10,7 @@ class Ball {
   
   Ball() {
     x = width/2;
-    y = height/2;
+    y = height/4;
     speed = 0;
     angle = random(360);
   }
@@ -82,8 +82,8 @@ class Ball {
 
   void display() {
 
-    fill(200);
-    noStroke();
+    fill(20, 50);
+    stroke(200);
     ellipse(x, y, BALL_RADIUS * 2, BALL_RADIUS * 2);
     
     if (pressed) {

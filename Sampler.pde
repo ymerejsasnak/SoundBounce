@@ -12,12 +12,15 @@ public class Sampler {
   int currentVoice = 0;
   int lastVoice = -1;
   final int MAX_VOICES = 4;
+  
+  String sampleName;
 
   
   
   Sampler(AudioContext ac) {
     audioContext = ac;
     hasSample = false;    
+    sampleName = "none";
     players = new SamplePlayer[MAX_VOICES];
     envelopes = new Envelope[MAX_VOICES];
     gains = new Gain[MAX_VOICES];
@@ -48,6 +51,7 @@ public class Sampler {
         }
         players[i] = new SamplePlayer(audio.ac, new Sample(sampleFile.getAbsolutePath()));
       }
+      sampleName = sampleFile.getName();
       println(sampleFile.getName() + " loaded successfully");
       setupSampler();
     } 
@@ -89,6 +93,11 @@ public class Sampler {
       lastVoice = currentVoice;
       currentVoice = (currentVoice + 1) % MAX_VOICES;
     }
+  }
+  
+  
+  String getSampleName() {
+    return sampleName;
   }
   
 }

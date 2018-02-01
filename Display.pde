@@ -1,8 +1,36 @@
-class Border {
+class Display {
   
-  Border() {
+  Display() {
+    textSize(20); 
+    textAlign(CENTER);
+  }
+  
+  void clearCenter() {
+    fill(0, 50);
+    stroke(0);
+    rect(BORDER, BORDER, width - BORDER * 2, height - BORDER * 2); 
+  }
+  
+  
+  void showText() {
+    
+    fill(200);
+    text("Minimum playback rate: " + round(audio.getRateMin() * 100) + "%", width/2, height/2 - 20);
+    text("Maximum playback rate: " + round(audio.getRateMax() * 100) + "%", width/2, height/2 + 20);
+    
+    fill(0);
+    text("Sample: " + audio.getSampleName(2), width/2, BORDER * 2/3);
+    text("Sample: " + audio.getSampleName(3), width/2, height - BORDER / 3);
+    
+    pushMatrix();
+    translate(BORDER / 3, height / 2);
+    rotate(HALF_PI);
+    text("Sample: " + audio.getSampleName(0), 0, 0);
+    text("Sample: " + audio.getSampleName(1), 0, -height + BORDER);
+    popMatrix();
     
   }
+  
   
   void drawBorder() {
     

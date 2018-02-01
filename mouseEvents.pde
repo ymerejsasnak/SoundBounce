@@ -1,7 +1,7 @@
 void mousePressed() {
 
   if (mouseButton == LEFT) {
-    border.locateClick(mouseX, mouseY);   
+    display.locateClick(mouseX, mouseY);   
     
   } else if (mouseButton == RIGHT) {
     audio.recordToggle();

@@ -66,6 +66,16 @@ class Audio {
     rateMax = constrain(rateMax, 1, RATE_MAX);
     println("Maximum playback rate set to: " + rateMax);
   }
+  
+  
+  float getRateMin() {
+    return rateMin;
+  }
+  
+  
+  float getRateMax() {
+    return rateMax; 
+  }
 
   void recordToggle() {
     if (recorder.isPaused()) {
@@ -100,6 +110,11 @@ class Audio {
     recordedOutput = new Sample(100);
     recorder.setSample(recordedOutput);
     recorder.reset(); 
+  }
+  
+  
+  String getSampleName(int index) {
+    return samplers[index].getSampleName();
   }
   
 }

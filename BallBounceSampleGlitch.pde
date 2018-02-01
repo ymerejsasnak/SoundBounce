@@ -4,7 +4,7 @@
 
 // LAST BUG? - issue with killing old samplers if non-wave file selected (ie, take it out of the try block or reassign then kill?)
 
-// option to adjust pitch range (from zero to a couple octaves?)  (preset ranges selectable at corners)
+// display info on screen? (min/max rate, file loaded, etc?)
 
 
 import beads.*;
@@ -22,26 +22,24 @@ final float RATE_MIN = 0.25;
 
 Ball ball;
 Audio audio;
-Border border;
+Display display;
 
 void setup() {
   size(800, 800); 
   
   ball = new Ball();
   audio = new Audio();
-  border = new Border();
-  
-  border.drawBorder();
-  
-  noStroke();
-    
+  display = new Display();
+      
 }
 
 
 void draw() {
   
-  fill(0, 50);
-  rect(BORDER, BORDER, width - BORDER * 2, height - BORDER * 2);
+  display.drawBorder();
+  display.showText(); 
+  
+  display.clearCenter(); 
 
   ball.updatePosition();
   ball.collisionDetect();
