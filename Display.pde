@@ -77,16 +77,16 @@ class Display {
       
     // top left corner
     } else if (_mouseX < BORDER && _mouseY < BORDER) {
-      audio.adjustRateMin(.05);
-    // top right
-    } else if (_mouseX > BORDER - width && _mouseY < BORDER) {
-      audio.adjustRateMax(.1);
+      audio.adjustRateBase(.05);
     // bottom left
     } else if (_mouseX < BORDER && _mouseY > height - BORDER) {
-      audio.adjustRateMin(-.05);
+      audio.adjustRateBase(-.05);
+    // top right
+    } else if (_mouseX > BORDER - width && _mouseY < BORDER) {
+      audio.adjustRateRange(.05);
     // bottom right
     } else if (_mouseX > width - BORDER && _mouseY > height - BORDER) {
-      audio.adjustRateMax(-.1);
+      audio.adjustRateRange(-.05);
     
     } else {
       ball.setPressed(mouseX, mouseY);

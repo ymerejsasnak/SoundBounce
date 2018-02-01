@@ -7,8 +7,13 @@ class Audio {
   Sample recordedOutput;
   RecordToSample recorder;
   
-  float rateMin = 1;
-  float rateMax = 1;
+  float rateBase = 1;
+  float rateRange = 0;
+  
+  final float RATE_BASE_MIN = 0.1;
+  final float RATE_BASE_MAX = 4;
+  final float RATE_RANGE_MIN = 0;
+  final float RATE_RANGE_MAX = 2;
   
   String lastSelectedFolder;
   
@@ -50,31 +55,31 @@ class Audio {
   
   
   void triggerSampler(int index, float value) {
-    samplers[index].trigger(map(value, POS_MIN, POS_MAX, rateMin, rateMax));
+    samplers[index].trigger(map(value, POS_MIN, POS_MAX, rateBase, rateBase + rateRange));
   }
 
   
-  void adjustRateMin(float amount) {
-    rateMin += amount; 
-    rateMin = constrain(rateMin, RATE_MIN, 1);
-    println("Minimum playback rate set to: " + rateMin);
+  void adjustRateBase(float amount) {
+    rateBase += amount; 
+    rateBase = constrain(rateBase, RATE_BASE_MIN, RATE_BASE_MAX);
+    println("Minimum playback rate set to: " + rateBase);
   }
   
   
-  void adjustRateMax(float amount) {
-    rateMax += amount; 
-    rateMax = constrain(rateMax, 1, RATE_MAX);
-    println("Maximum playback rate set to: " + rateMax);
+  void adjustRateRange(float amount) {
+    rateRange += amount; 
+    rateRange = constrain(rateRange, RATE_RANGE_MIN, RATE_RANGE_MAX);
+    println("Maximum playback rate set to: " + rateBase + rateRange);
   }
   
   
   float getRateMin() {
-    return rateMin;
+    return rateBase;
   }
   
   
   float getRateMax() {
-    return rateMax; 
+    return rateBase + rateRange; 
   }
 
   void recordToggle() {
